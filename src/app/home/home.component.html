@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+    <span>Exads</span>
+    <mat-form-field appearance="fill">
+        <mat-select [value]="'adv'">
+            <mat-option [value]="'adv'">
+                Advertiser
+            </mat-option>
+            <mat-option [value]="'pub'">
+                Publisher
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-button [routerLink]="'home'">campaigns</button>
+</mat-toolbar>
+
+<button mat-flat-button color="accent" class="new-campaign" (click)="addCampaign()">New campaign</button>
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade" *ngIf="(isLoadingCampaigns$ | async) || (errorCampaigns$ | async)">
+        <mat-spinner *ngIf="isLoadingCampaigns$ | async"></mat-spinner>
+        <div class="example-rate-limit-reached" *ngIf="(errorCampaigns$ | async)">
+            Failed to get campaigns
+        </div>
+        <button style="margin-left: 5px" mat-flat-button *ngIf="(errorCampaigns$ | async)" (click)="getCampaigns()">
+            Retry <mat-icon>sync</mat-icon>
+        </button>
+    </div>
+    <div class="example-table-container">
+
+        <table mat-table [dataSource]="campaigns$" class="example-table" matSort matSortActive="created"
+            matSortDisableClear matSortDirection="desc">
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let row">{{row.id}}</td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let row">{{row.name}}</td>
+            </ng-container>
+
+            <!-- State Column -->
+            <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef>Active</th>
+                <td mat-cell *matCellDef="let row">{{row.active}}</td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <mat-paginator [length]="(campaigns$ | async)?.length" [pageSize]="5"></mat-paginator>
+</div>
