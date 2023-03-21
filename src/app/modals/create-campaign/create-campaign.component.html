@@ -1,0 +1,7 @@
+<mat-form-field>
+    <span matPrefix>Campaign name: &nbsp;</span>
+    <input #nameInput matInput>
+</mat-form-field>
+<br>
+<button mat-flat-button color="accent" [mat-dialog-close]="nameInput.value"
+    [disabled]="nameInput.value.length < 3">Create campaign</button>

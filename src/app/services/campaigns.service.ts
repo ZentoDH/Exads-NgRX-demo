@@ -9,7 +9,7 @@ export class CampaignsService {
   private _campaigns: Campaign[] = [];
 
   constructor() {
-    // ADDED FAKE DATA
+    // FAKE DATA
     this._campaigns = [
       {
         id: this.newId(),

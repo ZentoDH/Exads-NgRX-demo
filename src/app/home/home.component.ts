@@ -5,6 +5,8 @@ import { Campaign } from '../models/campaign.model';
 import * as CampaignActions from '../store/actions/campaigns.actions'
 import { AppStateInterface } from '../store/interfaces/appSate.interface';
 import { campaignsSelector, errorSelector, isLoadingSelector } from '../store/selectors/campaigns.selectors';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CreateCampaignComponent } from '../modals/create-campaign/create-campaign.component';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingCampaigns$: Observable<boolean>;
   errorCampaigns$: Observable<string | null>;
 
-  constructor(private store: Store<AppStateInterface>) {
+  constructor(private store: Store<AppStateInterface>, private dialog: MatDialog) {
 
     // NOTE: Depending on how you want to consume this
 
@@ -48,8 +50,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.store.dispatch(CampaignActions.getCampaigns());
   }
 
-  addCampaign(name: string = 'test') {
-    this.store.dispatch(CampaignActions.addCampaign({name}))
+  addCampaign() {
+    const dialogRef = this.dialog.open(CreateCampaignComponent, { });
+
+    dialogRef.afterClosed().subscribe(name => {
+      this.store.dispatch(CampaignActions.addCampaign({name}))
+    });
   }
 
   ngOnDestroy(): void {
