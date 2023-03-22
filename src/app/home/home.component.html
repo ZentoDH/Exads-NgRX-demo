@@ -1,16 +1,18 @@
 <mat-toolbar color="primary">
     <span>Exads</span>
     <mat-form-field appearance="fill">
-        <mat-select [value]="'adv'">
-            <mat-option [value]="'adv'">
+        <mat-select  *ngrxLet="profile$ as profile" [value]="profile?.userType" (valueChange)="updateUserType(profile, $event)">
+            <mat-option [value]="'a'">
                 Advertiser
             </mat-option>
-            <mat-option [value]="'pub'">
+            <mat-option [value]="'p'">
                 Publisher
             </mat-option>
         </mat-select>
     </mat-form-field>
     <button mat-button [routerLink]="'home'">campaigns</button>
+    <span class="spacer"></span>
+    <button mat-flat-button *ngrxLet="profile$ as profile" style="border-radius: 1em;" [disabled]="isLoadingProfile$ | async" (click)="openProfileModal(profile)">{{ profile?.name || 'loading...' }}</button>
 </mat-toolbar>
 
 <button mat-flat-button color="accent" class="new-campaign" (click)="addCampaign()">New campaign</button>

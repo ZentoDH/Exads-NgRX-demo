@@ -1,1 +1,19 @@
-<p>profile works!</p>
+<form [formGroup]="profileForm" style="display: flex; flex-direction: column;">
+    <mat-form-field>
+        <span matPrefix>Name: &nbsp;</span>
+        <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-select formControlName="userType">
+            <mat-option [value]="'a'">
+                Advertiser
+            </mat-option>
+            <mat-option [value]="'p'">
+                Publisher
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button color="accent" type="submit" [disabled]="profileForm.invalid" [mat-dialog-close]="profileForm.value">Update</button>
+</form>

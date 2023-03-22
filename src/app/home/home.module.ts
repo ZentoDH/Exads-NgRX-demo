@@ -18,12 +18,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { CampaignEffects } from '../store/effects/campaigns.effects';
 import { CreateCampaignComponent } from '../modals/create-campaign/create-campaign.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { profileReducers } from '../store/reducers/profile.reducers';
+import { ProfileEffects } from '../store/effects/profile.effects';
+import { ProfileComponent } from '../modals/profile/profile.component';
+import { ReactiveComponentModule } from '@ngrx/component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    CreateCampaignComponent
+    CreateCampaignComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +37,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    ReactiveComponentModule,
+    ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -39,8 +47,10 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     MatTableModule,
     MatProgressSpinnerModule,
     StoreModule.forFeature('campaigns', campaignReducers),
+    StoreModule.forFeature('profile', profileReducers),
     EffectsModule.forFeature([
-      CampaignEffects
+      CampaignEffects,
+      ProfileEffects,
     ])
   ],
   providers: [

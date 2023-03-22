@@ -14,7 +14,6 @@ import { ProfileComponent } from './modals/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
   ],
   imports: [
     BrowserModule,
